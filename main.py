@@ -1,16 +1,90 @@
 import random
 
-def escolher_palavra():
-    palavras = ['python', 'programacao', 'computador', 'jogo', 'desenvolvimento']
+def carregar_palavras():
+    with open("palavras.txt", "r") as arquivo:
+        return arquivo.read().splitlines()
+
+def escolher_palavra(palavras):
     return random.choice(palavras)
 
+def exibir_forca(erros):
+    desenhos = [
+        """
+           _______
+          |       |
+          |       
+          |       
+          |       
+          |       
+        __|__
+        """,
+        """
+           _______
+          |       |
+          |       O
+          |       
+          |       
+          |       
+        __|__
+        """,
+        """
+           _______
+          |       |
+          |       O
+          |       |
+          |       
+          |       
+        __|__
+        """,
+        """
+           _______
+          |       |
+          |       O
+          |      /|
+          |       
+          |       
+        __|__
+        """,
+        """
+           _______
+          |       |
+          |       O
+          |      /|\\
+          |       
+          |       
+        __|__
+        """,
+        """
+           _______
+          |       |
+          |       O
+          |      /|\\
+          |      / 
+          |       
+        __|__
+        """,
+        """
+           _______
+          |       |
+          |       O
+          |      /|\\
+          |      / \\
+          |       
+        __|__
+        """
+    ]
+    print(desenhos[erros])
+
 def jogar_forca():
-    palavra = escolher_palavra()
+    print("Bem-vindo ao jogo da forca!")
+    palavras = carregar_palavras()
+    palavra = escolher_palavra(palavras)
     letras_certas = []
     letras_erradas = []
     tentativas = 6
     
     while True:
+        exibir_forca(len(letras_erradas))
         palavra_escondida = ''.join(letra if letra in letras_certas else '_' for letra in palavra)
         print(f'Palavra: {palavra_escondida}')
         print(f'Tentativas restantes: {tentativas}')
@@ -20,7 +94,7 @@ def jogar_forca():
             print('Parabéns! Você ganhou!')
             break
         
-        if tentativas == 0:
+        if len(letras_erradas) == len(exibir_forca(0)):
             print(f'Game over! A palavra era "{palavra}".')
             break
         
